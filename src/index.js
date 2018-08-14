@@ -4,27 +4,42 @@ import './assets/index.css';
 import App from './components/App';
 
 import { getSnapshot } from 'mobx-state-tree';
-import { WishList } from './models/WishList';
+import { Group } from './models/Group';
 
 let initialState = {
-  items: [
-    {
-      name: 'LEGO Mindstorms EV3',
-      price: 349.95,
-      image: 'xxx.png'
+  users: {
+    a342: {
+        id: "a342",
+        name: "Homer",
+        gender: "m"
     },
-    {
-      name: 'Miracles - C.S. Lewis',
-      price: 12.91,
-      image: 'xxx.png'
+    "5fc2": {
+        id: "5fc2",
+        name: "Marge",
+        gender: "f"
+    },
+    "663b": {
+        id: "663b",
+        name: "Bart",
+        gender: "m"
+    },
+    "65aa": {
+        id: "65aa",
+        name: "Maggie",
+        gender: "f"
+    },
+    ba32: {
+        id: "ba32",
+        name: "Lisa",
+        gender: "f"
     }
-  ]
+  }
 };
 
-let wishList = WishList.create(initialState);
+let group = Group.create(initialState);
 
 function renderApp() {
-  ReactDOM.render(<App wishList={wishList} />, document.getElementById('root'));
+  ReactDOM.render(<App group={group} />, document.getElementById('root'));
 }
 
 renderApp();
@@ -35,8 +50,8 @@ if (module.hot) {
   })
 
   module.hot.accept(['./models/WishList'], () => {
-    const snapshot = getSnapshot(wishList);
-    wishList = WishList.create(snapshot);
+    const snapshot = getSnapshot(group);
+    group = Group.create(snapshot);
     renderApp();
   })
 }
