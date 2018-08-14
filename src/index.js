@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './assets/index.css';
 import App from './components/App';
 
-import { getSnapshot } from 'mobx-state-tree';
+import { getSnapshot, addMiddleware } from 'mobx-state-tree';
 import { Group } from './models/Group';
 
 let initialState = {
@@ -37,6 +37,10 @@ let initialState = {
 };
 
 let group = Group.create(initialState);
+addMiddleware(group, (call, next) => {
+  console.log(`[${call.type}] ${call.name}`);
+  return next(call);
+});
 
 function renderApp() {
   ReactDOM.render(<App group={group} />, document.getElementById('root'));
