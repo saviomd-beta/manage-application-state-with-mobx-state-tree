@@ -6,37 +6,9 @@ import App from './components/App';
 import { getSnapshot, addMiddleware } from 'mobx-state-tree';
 import { Group } from './models/Group';
 
-let initialState = {
-  users: {
-    a342: {
-        id: "a342",
-        name: "Homer",
-        gender: "m"
-    },
-    "5fc2": {
-        id: "5fc2",
-        name: "Marge",
-        gender: "f"
-    },
-    "663b": {
-        id: "663b",
-        name: "Bart",
-        gender: "m"
-    },
-    "65aa": {
-        id: "65aa",
-        name: "Maggie",
-        gender: "f"
-    },
-    ba32: {
-        id: "ba32",
-        name: "Lisa",
-        gender: "f"
-    }
-  }
-};
+let initialState = { users: {} };
 
-let group = Group.create(initialState);
+let group = window.group = Group.create(initialState);
 addMiddleware(group, (call, next) => {
   console.log(`[${call.type}] ${call.name}`);
   return next(call);
@@ -55,7 +27,7 @@ if (module.hot) {
 
   module.hot.accept(['./models/WishList'], () => {
     const snapshot = getSnapshot(group);
-    group = Group.create(snapshot);
+    group = window.group = Group.create(snapshot);
     renderApp();
   })
 }
